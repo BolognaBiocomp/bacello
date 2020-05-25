@@ -4,8 +4,6 @@
 
 Andrea Pierleoni, Pier Luigi Martelli, Piero Fariselli, Rita Casadio, BaCelLo: a balanced subcellular localization predictor, Bioinformatics, Volume 22, Issue 14, 15 July 2006, Pages e408-e416.
 
-#### Requirements
-
 - python
 - numpy
 
