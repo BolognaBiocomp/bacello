@@ -86,6 +86,7 @@ def bacello(sequenza, profilo, classe='A'):
                     score = scores[2]
     return prediction, score
 
+#-----------MAIN--------------#
 def main():
     DESC = "BaCelLo: Prediction of subcellular localization"
     parser = argparse.ArgumentParser(description = DESC, prog = "bacello.py")
@@ -99,6 +100,6 @@ def main():
     print ("# BaCelLo predictor (v1.0)")
     print ("Predicted localization for protein", seqid, ":", loc)
     sys.exit(0)
-#-----------MAIN--------------#
+
 if __name__=='__main__':
     main()
