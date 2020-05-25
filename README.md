@@ -6,8 +6,8 @@ Andrea Pierleoni, Pier Luigi Martelli, Piero Fariselli, Rita Casadio, BaCelLo: a
 
 #### Requirements
 
-python
-numpy
+- python
+- numpy
 
 #### Installation and configuration
 
