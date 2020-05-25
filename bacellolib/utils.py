@@ -1,5 +1,6 @@
 #----------- ANDREA PIERLEONI--------------#
 import sys
+
 def read1Fasta(fname):
     try:
         lines=open(fname,'r').readlines()
