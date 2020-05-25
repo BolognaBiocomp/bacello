@@ -2,6 +2,8 @@
 
 #### Publication
 
+Andrea Pierleoni, Pier Luigi Martelli, Piero Fariselli, Rita Casadio, BaCelLo: a balanced subcellular localization predictor, Bioinformatics, Volume 22, Issue 14, 15 July 2006, Pages e408–e416.
+
 #### Installation and configuration
 
 Before running bacello you need to set and export a variable named BACELLO_HOME to point to the program installation dir:
