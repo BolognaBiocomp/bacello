@@ -45,46 +45,33 @@ def bacello(sequenza, profilo, classe='A'):
         svm=svmlib.getSVMLight(Lmodelli[k]+'_'+classe)
         svmout=svm.predict(Linput[k])+Lsoglia_med[k]
         Lrisultati_svm.append(svmout)#calcolo con kernel RBF + aggiunta soglia di bilanciamento
-        #Scelta localizzazione predetta
-        # scores = numpy.array(Lrisultati_svm)/numpy.sum(numpy.array(Lrisultati_svm))
-        x = numpy.array(Lrisultati_svm)
-    scores = (x - numpy.min(x))/(numpy.max(x) - numpy.min(x))
-    score = 0.0
+    #Scelta localizzazione predetta
     if classe=='P':
         if Lrisultati_svm[0]>=0:
             prediction='Secretory'
-            score = scores[0]
         else:
             if Lrisultati_svm[1]>=0:
                 if Lrisultati_svm[3]>=0:
                     prediction='Mitochondrion'
-                    score = scores[3]
                 else:
                     prediction='Chloroplast'
-                    score = scores[3]
             else:
                 if Lrisultati_svm[2]>=0:
                     prediction='Nucleus'
-                    score = scores[2]
                 else:
                     prediction='Cytoplasm'
-                    score = scores[2]
     else:#animali e funghi
         if Lrisultati_svm[0]>=0:
             prediction='Secretory'
-            score = scores[0]
         else:
             if Lrisultati_svm[1]>=0:
                 prediction='Mitochondrion'
-                score = scores[1]
             else:
                 if Lrisultati_svm[2]>=0:
                     prediction='Nucleus'
-                    score = scores[2]
                 else:
                     prediction='Cytoplasm'
-                    score = scores[2]
-    return prediction, score
+    return prediction
 
 #-----------MAIN--------------#
 def main():
@@ -96,7 +83,7 @@ def main():
     ns = parser.parse_args()
     seq, seqid = utils.read1Fasta(ns.fasta)
     prof = cpparser.BlastCheckPointProfile(ns.pssm)
-    loc, sc = bacello(seq, prof, ns.kingdom)
+    loc = bacello(seq, prof, ns.kingdom)
     print ("# BaCelLo predictor (v1.0)")
     print ("Predicted localization for protein", seqid, ":", loc)
     sys.exit(0)
