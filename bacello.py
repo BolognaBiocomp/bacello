@@ -49,29 +49,38 @@ def bacello(sequenza, profilo, classe='A'):
     if classe=='P':
         if Lrisultati_svm[0]>=0:
             prediction='Secretory'
+            score=Lrisultati_svm[0]
         else:
             if Lrisultati_svm[1]>=0:
                 if Lrisultati_svm[3]>=0:
                     prediction='Mitochondrion'
+                    score=Lrisultati_svm[3]
                 else:
                     prediction='Chloroplast'
+                    score=-1*Lrisultati_svm[3]
             else:
                 if Lrisultati_svm[2]>=0:
                     prediction='Nucleus'
+                    score=Lrisultati_svm[2]
                 else:
                     prediction='Cytoplasm'
+                    score=-1*Lrisultati_svm[2]
     else:#animali e funghi
         if Lrisultati_svm[0]>=0:
             prediction='Secretory'
+            score=Lrisultati_svm[0]
         else:
             if Lrisultati_svm[1]>=0:
                 prediction='Mitochondrion'
+                score=Lrisultati_svm[1]
             else:
                 if Lrisultati_svm[2]>=0:
                     prediction='Nucleus'
+                    score=Lrisultati_svm[2]
                 else:
                     prediction='Cytoplasm'
-    return prediction
+                    score=-1*Lrisultati_svm[2]
+    return prediction, score
 
 #-----------MAIN--------------#
 def main():
@@ -84,9 +93,9 @@ def main():
     ns = parser.parse_args()
     seq, seqid = utils.read1Fasta(ns.fasta)
     prof = cpparser.BlastCheckPointProfile(ns.pssm)
-    loc = bacello(seq, prof, ns.kingdom)
+    loc, score = bacello(seq, prof, ns.kingdom)
     ofs = open(ns.outf, 'w')
-    utils.write_gff_output(seqid, seq, ofs, loc, 1.0)
+    utils.write_gff_output(seqid, seq, ofs, loc, round(score,2))
     ofs.close()
     sys.exit(0)
 
