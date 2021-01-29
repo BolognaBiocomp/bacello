@@ -1,5 +1,6 @@
 #----------- ANDREA PIERLEONI--------------#
 import sys
+from . import config as cfg
 
 def read1Fasta(fname):
     try:
@@ -58,3 +59,9 @@ def cal_freq_prof(profilo, fin=0,baco=0):
     else:
         Lrisultato.extend(profilo.mean(0))
     return Lrisultato
+
+def write_gff_output(acc, sequence, output_file, localization, prob):
+    l = len(sequence)
+    print(acc, "BaCelLo", cfg.locmap[localization][0], 1, l, prob, ".", ".",
+    "Ontology_term=%s;evidence=ECO:0000256" % cfg.locmap[localization][1],
+    file = output_file, sep = "\t")
