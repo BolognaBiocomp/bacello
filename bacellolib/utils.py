@@ -60,8 +60,67 @@ def cal_freq_prof(profilo, fin=0,baco=0):
         Lrisultato.extend(profilo.mean(0))
     return Lrisultato
 
+def get_data_cache(cache_dir):
+    import os
+    from . import datacache
+    ret = None
+    if cache_dir is not None:
+        if os.path.isdir(cache_dir):
+            ret = datacache.DataCache(cache_dir)
+    return ret
+
 def write_gff_output(acc, sequence, output_file, localization, prob):
     l = len(sequence)
     print(acc, "BaCelLo", cfg.locmap[localization][0], 1, l, prob, ".", ".",
     "Ontology_term=%s;evidence=ECO:0000256" % cfg.locmap[localization][1],
     file = output_file, sep = "\t")
+
+def get_json_output(acc, sequence, localization, prob):
+    acc_json = {'accession': acc, 'dbReferences': [], 'comments': []}
+    acc_json['sequence'] = {
+                              "length": len(sequence),
+                              "sequence": sequence
+                           }
+    c = cfg.locmap[localization]
+    go_info = cfg.GOINFO[c[1]]
+    acc_json['dbReferences'].append({
+        "id": c[1],
+        "type": "GO",
+        "properties": {
+          "term": go_info['GO']['properties']['term'],
+          "source": "IEA:BaCelLo",
+          "score": round(float(prob),2)
+        },
+        "evidences": [
+          {
+            "code": "ECO:0000256",
+            "source": {
+              "name": "SAM",
+              "id": "BaCelLo",
+              "url": "http://gpcr.biocomp.unibo.it/bacello/",
+            }
+          }
+        ]
+    })
+    acc_json['comments'].append({
+        "type": "SUBCELLULAR_LOCATION",
+        "locations": [
+          {
+            "location": {
+              "value": go_info["uniprot"]["location"]["value"],
+              "score": round(float(prob),2),
+              "evidences": [
+                {
+                  "code": "ECO:0000256",
+                  "source": {
+                    "name": "SAM",
+                    "id": "BaCelLo",
+                    "url": "http://gpcr.biocomp.unibo.it/bacello/",
+                  }
+                }
+              ]
+            }
+          }
+        ]
+    })
+    return acc_json

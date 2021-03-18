@@ -7,6 +7,7 @@ Andrea Pierleoni, Pier Luigi Martelli, Piero Fariselli, Rita Casadio, BaCelLo: a
 #### Requirements
 - python=3.8.3
 - numpy=1.18.1
+- biopython
 
 #### Installation and configuration
 
@@ -20,7 +21,7 @@ $ export BACELLO_HOME='/path/to/bacello'
 To run the program:
 
 ```
-./bacello.py -f fasta_file -p blast_pssm_file -k [A,P,F]
+./bacello.py -f fasta_file -p blast_pssm_file -k [A,P,F] -o out_file
 
 ```
 
@@ -29,10 +30,5 @@ where fasta_file contains the input protein sequence in FASTA format, blast_pssm
 Running on a testing animal sequence:
 
 ```
-./bacello.py -f testdata/T96060011003.fasta -p testdata/T96060011003.pssm -k A
-```
-The output is:
-```
-# BaCelLo predictor (v1.0)
-Predicted localization for protein T96060011003 : Secretory
+./bacello.py -f testdata/T96060011003.fasta -p testdata/T96060011003.pssm -k A -o testdata/T96060011003.gff3
 ```
