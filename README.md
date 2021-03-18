@@ -7,6 +7,7 @@ Andrea Pierleoni, Pier Luigi Martelli, Piero Fariselli, Rita Casadio, BaCelLo: a
 #### Requirements
 - python=3.8.3
 - numpy=1.18.1
+- biopython
 
 #### Installation and configuration
 
