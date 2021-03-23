@@ -20,8 +20,16 @@ COPY requirements.txt .
 RUN python -m pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     apt-get -y update && \
-    apt-get install -y ncbi-blast+ && \
+    apt-get install -y ncbi-blast+ wget && \
     useradd -m bacello
+
+WORKDIR /seqdb/
+
+RUN wget https://share.biocomp.unibo.it/biocomp/sp2021_01/uniprot_sprot.fasta.gz && \
+    gunzip uniprot_sprot.fasta.gz && \
+    makeblastdb -in uniprot_sprot.fasta -dbtype prot
+
+WORKDIR /usr/src/bacello
 
 USER bacello
 

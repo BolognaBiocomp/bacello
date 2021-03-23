@@ -1,3 +1,8 @@
+BLASTDB="/seqdb/uniprot_sprot.fasta"
+
+BLASTALPH = "ARNDCQEGHILKMFPSTWYV"
+HSSPALPH = "VLIMFWYGAPSTCHRKQEND"
+
 locmap = {"Cytoplasm": ("Cytoplasm", "GO:0005737"),
           "Nucleus": ("Nucleus", "GO:0005634"),
           "Secretory": ("Extracellular", "GO:0005615"),

@@ -75,15 +75,13 @@ def write_gff_output(acc, sequence, output_file, localization, prob):
     "Ontology_term=%s;evidence=ECO:0000256" % cfg.locmap[localization][1],
     file = output_file, sep = "\t")
 
-def get_json_output(acc, sequence, localization, prob):
-    acc_json = {'accession': acc, 'dbReferences': [], 'comments': []}
-    acc_json['sequence'] = {
-                              "length": len(sequence),
-                              "sequence": sequence
-                           }
+def get_json_output(i_json, localization, prob):
+
     c = cfg.locmap[localization]
     go_info = cfg.GOINFO[c[1]]
-    acc_json['dbReferences'].append({
+    i_json['dbReferences'] = []
+    i_json['comments'] = []
+    i_json['dbReferences'].append({
         "id": c[1],
         "type": "GO",
         "properties": {
@@ -102,7 +100,7 @@ def get_json_output(acc, sequence, localization, prob):
           }
         ]
     })
-    acc_json['comments'].append({
+    i_json['comments'].append({
         "type": "SUBCELLULAR_LOCATION",
         "locations": [
           {
@@ -123,4 +121,4 @@ def get_json_output(acc, sequence, localization, prob):
           }
         ]
     })
-    return acc_json
+    return i_json
