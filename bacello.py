@@ -130,8 +130,7 @@ def main():
     parser = argparse.ArgumentParser(description = DESC, prog = "bacello.py")
     subparsers   = parser.add_subparsers(title = "subcommands",
                                          description = "valid subcommands",
-                                         help = "additional help",
-                                         required = True)
+                                         help = "additional help")
     multifasta  = subparsers.add_parser("multi-fasta",
                                           help = "Multi-FASTA input module",
                                           description = "BaCelLo: Multi-FASTA input module.")
