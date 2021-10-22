@@ -114,7 +114,8 @@ def run_multifasta(ns):
         SeqIO.write([record], fastaSeq, 'fasta')
         seq, seqid = utils.read1Fasta(fastaSeq)
         pssmFile = blast.runPsiBlast(prefix, ns.dbfile, fastaSeq, workEnv, data_cache=data_cache,
-                                     num_alignments=ns.pbnalign, num_iterations=ns.pbniter, evalue=ns.pbeval)
+                                     num_alignments=ns.pbnalign, num_iterations=ns.pbniter, evalue=ns.pbeval,
+                                     threads=ns.threads)
         prof = cpparser.BlastCheckPointProfile(pssmFile)
         loc, score = bacello(seq, prof, ns.kingdom)
         if ns.outfmt == "gff3":
@@ -145,6 +146,7 @@ def main():
     multifasta.add_argument("-o", "--output", help = "The output file name", dest="outf", required = "True")
     multifasta.add_argument("-m", "--outfmt", help = "The output format: json or gff3 (default)", choices=['json', 'gff3'], required = False, default = "gff3")
     multifasta.add_argument("-c", "--cache-dir", help="Cache dir for alignemnts", dest="cache_dir", required=False, default=None)
+    multifasta.add_argument("-a", "--threads", help="Number of threads (default 1)", dest="threads", required=False, default=1, type=int)
     multifasta.add_argument("-j", "--psiblast-iter", help="Number of PSIBLAST iterations (default 3)", dest="pbniter", required=False, default=3, type=int)
     multifasta.add_argument("-n", "--psiblast-nalign", help="PSIBLAST num_alignments parameter (default 5000)", dest="pbnalign", required=False, default=5000, type=int)
     multifasta.add_argument("-e", "--psiblast-evalue", help="PSIBLAST evalue parameter (default 0.001)", dest="pbeval", required=False, default=0.001, type=float)
