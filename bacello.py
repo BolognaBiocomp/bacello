@@ -102,12 +102,13 @@ def run_pssm(ns):
     sys.exit(0)
 
 def run_multifasta(ns):
-    workEnv = workenv.TemporaryEnv()
+
     data_cache = utils.get_data_cache(ns.cache_dir)
     i = 0
     ofs = open(ns.outf, 'w')
     protein_jsons = []
     for record in SeqIO.parse(ns.fasta, 'fasta'):
+        workEnv = workenv.TemporaryEnv()
         prefix = "seq%s" % i
         fastaSeq  = workEnv.createFile(prefix+".", ".fasta")
         SeqIO.write([record], fastaSeq, 'fasta')
@@ -121,6 +122,7 @@ def run_multifasta(ns):
         else:
             acc_json = utils.get_json_output(seqid, seq, loc, round(score,2))
             protein_jsons.append(acc_json)
+        workEnv.destroy()
     if ns.outfmt == "json":
         json.dump(protein_jsons, ofs, indent=5)
     ofs.close()
