@@ -116,7 +116,10 @@ def run_multifasta(ns):
         pssmFile = blast.runPsiBlast(prefix, ns.dbfile, fastaSeq, workEnv, data_cache=data_cache,
                                      num_alignments=ns.pbnalign, num_iterations=ns.pbniter, evalue=ns.pbeval,
                                      threads=ns.threads)
-        prof = cpparser.BlastCheckPointProfile(pssmFile)
+        try:
+            prof = cpparser.BlastCheckPointProfile(pssmFile)
+        except:
+            prof = utils.one_hot_encoding(seq)
         loc, score = bacello(seq, prof, ns.kingdom)
         if ns.outfmt == "gff3":
             utils.write_gff_output(seqid, seq, ofs, loc, round(score,2))

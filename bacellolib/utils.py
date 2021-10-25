@@ -31,6 +31,16 @@ def cal_freq_seq(sequenza, fin=0):
         Lrisultato.append(sequenza.count(aa)/tot)
     return Lrisultato
 
+def one_hot_encoding(sequence, alph="VLIMFWYGAPSTCHRKQEND"):
+    profile = numpy.zeros((len(sequence), 20))
+    for (i, aa) in enumerate(sequence):
+        try:
+            j = alph.index(aa)
+            profile[i,j] = 1.0
+        except:
+            pass
+    return profile
+
 def cal_freq_prof(profilo, fin=0,baco=0):
     '''calcola la frequenza (come vettore da 20 aminoacidi) di un profilo
       modificare questa funzione se l'input del profilo e' in un formato diverso
