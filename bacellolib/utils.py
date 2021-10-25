@@ -1,6 +1,7 @@
 #----------- ANDREA PIERLEONI--------------#
 import sys
 from . import config as cfg
+import numpy
 
 def read1Fasta(fname):
     try:
